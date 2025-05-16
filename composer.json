@@ -1,0 +1,8 @@
+{
+    "name": "joao/sipc",
+    "description": "Sistema de gestión de ayuda para Carabineros de Chile",
+    "require": {
+        "phpmailer/phpmailer": "^6.9",
+        "dompdf/dompdf": "^3.1"
+    }
+}

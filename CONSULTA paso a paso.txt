@@ -1,0 +1,55 @@
+Hola, necesito que Con esta inicializacion en el codigo:
+<?php
+session_start();
+if ($_SESSION['rol'] != 'JefeZona') {
+    header("Location: login.php");
+    exit;
+}
+?>
+Paso a paso Creame el codigo de una pestaña llammada Jefe_zona.php y las pestañas necesarias 
+para que desde una base de datos, se carguen en tarjetas los datos de delincuentes
+almacenados en esta base de datos. Los datos que deben mostrarse en estas tarjetas son las siguientes:
+-foto
+-nombre completo
+-apodo
+-edad
+-genero
+-estado judicial
+-domicilio particular
+-comuna de residencia
+y abajo de los datos un boton que diga "Ver detalles"
+Al clikear el boton "Ver detalles" que se desplegue un modal donde aparezcan los siguientes datos:
+MODAL: 
+Titulo: "Detalles del delincuente"
+-Foto del delincuente
+-nombre completo
+-apodo
+-edad
+-genero
+-estado judicial
+-domicilio particular
+-comuna de residencia
+despues separado por una linea o algo similar, lo siguiente:
+-Delitos asociados
+-fechas de los delitos
+-descripcion de los delitos-
+ubicacion geografica de los delitos asociados al delincuente de la tarjeta seleccionada (mostrado en un mapa con la API gooogle maps)
+Posteriormente un boton que diga: "Generar Reporte" donde al clikear este boton, se genere un pdf
+guardando toda la informacion que se visualiza en el modal.
+
+Necesitas la base de datos para poder implementar todo esto??
+
+
+
+"<td>" + fechaInicio + " - " + fechaFin + "</td>" +
+                        "<td>" + sector.nombre_sector + "</td>" +
+                        "<td>" + sector.tipo_delito + "</td>" +
+                        "<td>" + sector.delitos + "</td>";
+
+
+
+// Conexión a la base de datos
+include('../../../config/config.php');
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}

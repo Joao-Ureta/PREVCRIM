@@ -1,0 +1,59 @@
+SECTORES REGION METROPOLITANA
+
+🏙️ Sector Centro
+
+Santiago
+Estación Central
+Independencia
+
+🧭 Sector Norte
+
+Conchalí
+Huechuraba
+Quilicura
+Recoleta
+
+🌄 Sector Nororiente
+
+Providencia
+Ñuñoa
+Las Condes
+Vitacura
+Lo Barnechea
+La Reina
+
+🌅 Sector Norponiente
+
+Renca
+Cerro Navia
+Quinta Normal
+Lo Prado
+Pudahuel
+
+🌇 Sector Sur
+
+La Cisterna
+San Ramón
+El Bosque
+San Bernardo
+La Pintana
+Lo Espejo
+Pedro Aguirre Cerda
+
+🌿 Sector Suroriente
+
+La Florida
+Puente Alto
+San José de Maipo
+Pirque
+
+🏘️ Sector Surponiente
+
+Maipú
+Cerrillos
+Padre Hurtado
+Peñaflor
+Talagante
+El Monte
+Isla de Maipo
+

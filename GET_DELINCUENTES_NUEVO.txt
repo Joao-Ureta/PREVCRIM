@@ -1,0 +1,37 @@
+<?php
+require_once 'config/config.php';
+
+if (isset($_POST['id'])) {
+    $id = $_POST['id'];
+
+    // Obtener datos generales
+    $sql = "SELECT d.*, c.nombre_comuna 
+            FROM delincuente d 
+            JOIN comuna c ON d.id_comuna = c.id_comuna 
+            WHERE d.id_delincuente = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $delincuente = $res->fetch_assoc();
+
+    // Obtener delitos asociados
+    $sqlDelitos = "SELECT descripcion, fecha, latitud, longitud 
+                   FROM delitos 
+                   WHERE id_delincuente = ?";
+    $stmt2 = $conn->prepare($sqlDelitos);
+    $stmt2->bind_param("i", $id);
+    $stmt2->execute();
+    $res2 = $stmt2->get_result();
+
+    $delitos = [];
+    while ($row = $res2->fetch_assoc()) {
+        $delitos[] = $row;
+    }
+
+    echo json_encode([
+        "delincuente" => $delincuente,
+        "delitos" => $delitos
+    ]);
+}
+?>
