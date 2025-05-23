@@ -1,10 +1,10 @@
 <?php
 session_start();
 if ($_SESSION['rol'] != 'Administrador') {
-    header("Location: login.php");
+    header("Location: login_pdi.php");
     exit;
 }
-include_once($_SERVER['DOCUMENT_ROOT'] . '/SIPC/config/config.php');
+include_once '../../../config/config.php';
 
 
 $sql = "SELECT id_delincuente, nombre_completo, rut, edad, genero, apodo, antecedentes, foto, nacionalidad, id_sector, estado_judicial FROM delincuente";
@@ -28,18 +28,18 @@ $result = $conn->query($sql);
 
 
 
-    <title>Administrador Carabineros</title>
+    <title>Administrador PDIa</title>
 	
-    <style>
+        <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #2E8B57;
+            background:rgb(220, 220, 220);
             color: white;
             text-align: center;
             margin-top: 0;
         }
         header {
-            background-color: #0b6623;
+            background-color: #0033A0;
             color: white;
             padding: 10px 20px;
             display: flex;
@@ -73,7 +73,7 @@ $result = $conn->query($sql);
             margin: 0;
             font-family: Arial, sans-serif;
             font-size: 48px;
-			background-color: #0b6623;
+			background-color: #0033A0;
         }
 
         .help-link a, .return-link a {
@@ -99,7 +99,7 @@ $result = $conn->query($sql);
 
 
 		.custom-card {
-			background-color: #0b6623;
+			background-color: #0033A0;
 			color: white;
 			display: flex;
 			flex-direction: column;
@@ -142,8 +142,8 @@ $result = $conn->query($sql);
 		}
 
 		.btn-solicitar {
-			background-color: #2E8B57;
-			color: white;
+			background-color: #FFCC00;
+			color: black;
 			font-weight: bold;
 			transition: all 0.3s ease-in-out;
 			text-align: center;
@@ -157,7 +157,7 @@ $result = $conn->query($sql);
 		}
 		
 		.btn-solicitar:hover {
-			background-color: #00FF7F;
+			background-color: #FFD700;
 		  }
 
 		/* Adaptabilidad en pantallas más pequeñas */
@@ -180,7 +180,7 @@ $result = $conn->query($sql);
 		}
 
         footer {
-            background-color: #0b6623;
+            background-color: #0033A0;
             color: white;
             padding: 10px;
             position: fixed;
@@ -212,7 +212,7 @@ $result = $conn->query($sql);
 
 		/* Estilos para nav links y busqueda */
 		  .navbar {
-			background-color: #0b6623 !important;
+			background-color: #0033A0 !important;
 		  }
 
 		  .navbar a,
@@ -226,11 +226,12 @@ $result = $conn->query($sql);
 		  }
 
 		  .dropdown-menu {
-			background-color: #0b6623;
+			background-color: #0033A0;
 		  }
 
 		  .dropdown-item:hover {
-			background-color: #0e7d2d;
+			background-color: #FFCC00;
+            color: black !important;
 		  }
 
 		
@@ -243,7 +244,7 @@ $result = $conn->query($sql);
     margin-bottom: 20px;
     flex-wrap: wrap; /* Para que se acomode en pantallas pequeñas */
     padding: 10px 15px;
-    background-color: #0b6623;
+    background-color: #0033A0;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     position: relative; /* Esto permite colocar el título encima de los filtros */
@@ -256,7 +257,7 @@ $result = $conn->query($sql);
     margin-bottom: 20px;
     flex-wrap: wrap; /* Para que se acomode en pantallas pequeñas */
     padding: 10px 15px;
-    background-color: #0b6623;
+    background-color: #0033A0;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     position: relative; /* Esto permite colocar el título encima de los filtros */
@@ -322,15 +323,15 @@ $result = $conn->query($sql);
 .buscador button {
     padding: 6px 12px;
     border: none;
-    background-color: #2E8B57;
-    color: white;
+    background-color: #FFCC00;
+    color: black;
     border-radius: 5px;
     font-size: 14px;
     transition: background-color 0.3s;
 }
 
 .buscador button:hover {
-    background-color: #00FF7F;
+    background-color: #E6E6E6;
 }
 
 
@@ -339,14 +340,14 @@ $result = $conn->query($sql);
     padding: 8px 12px;
     border: 1px solid white;
     border-radius: 5px;
-    background-color: #2E8B57;
-    color: white;
+    background-color: #FFCC00;
+    color: black;
     transition: background-color 0.3s, color 0.3s;
 }
 
 .botones a:hover {
-    background-color: #00FF7F;
-    color: white;
+    background-color:  #E6E6E6;
+    color: black;
 }
 
 /* Estilos generales */
@@ -366,30 +367,30 @@ $result = $conn->query($sql);
 		.boton {
 			display: inline-block;
 			padding: 10px 20px;
-			background-color: #0b6623;
-			color: white;
+			background-color: #FFCC00;
+			color: black;
 			text-decoration: none;
 			border-radius: 5px;
 			font-weight: bold;
 		  }
 
 		  .boton:hover {
-			background-color: #00FF7F;
+			background-color: #E6E6E6;
 		  }
 		  
 		  /* Boton de reporte general */
 		.boton-reporteGeneral {
 			display: inline-block;
 			padding: 10px 20px;
-			background-color: #0b6623;
-			color: white;
+			background-color: #FFCC00;
+			color: black;
 			text-decoration: none;
 			border-radius: 5px;
 			font-weight: bold;
 		  }
 
 		  .boton-reporteGeneral:hover {
-			background-color: #00FF7F;
+			background-color: #E6E6E6;
 		  }
 
 
@@ -443,7 +444,7 @@ $result = $conn->query($sql);
     font-family: 'Arial', sans-serif;
     font-size: 24px;
     margin-bottom: 15px;
-    background-color: #2E8B57; /* Fondo verde oscuro */
+    background-color: #FFCC00; /* Fondo verde oscuro */
     padding: 10px; /* Espaciado alrededor del texto */
     border-radius: 5px; /* Bordes redondeados para el fondo */
 }
@@ -472,14 +473,14 @@ th, td {
 
 /* Contenedor de los títulos de la tabla */
 th {
-    background-color: #0b6623; /* Verde oscuro */
+    background-color: #FFCC00; /* Verde oscuro */
     color: #fff; /* Texto blanco */
     font-size: 18px;
 }
 
 /* Estilo de las celdas de la tabla */
 td {
-    background-color: #9ACD32; /* Fondo verde claro */
+    background-color: #FFCC00; /* Fondo verde claro */
     color: #333; /* Texto negro */
 }
 
@@ -499,11 +500,11 @@ tr:hover {
 </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg" style="background-color: #0b6623;">
+<nav class="navbar navbar-expand-lg" style="background-color: #C0C0C0;">
   <div class="container-fluid">
     <div class="logo-container" style="margin-right: 40px;">
-        <img src="/SIPC/estaticos/img/carabineros.png" alt="Carabineros de Chile" width="120">
-		<a class="navbar-brand" href="admin.php">Administrador</a>
+        <img src="/SIPC/estaticos/img/pdi.jpg" alt="Paz Ciudadana" width="120">
+		<a class="navbar-brand" href="admin_pc.php">Administrador</a>
     </div>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -723,7 +724,7 @@ if (isset($_GET['comuna']) && !empty($_GET['comuna'])) {
     </div>
 	</div>
 	
-<a href="admin.php" class="boton">Actualizar</a>
+<a href="admin_pc.php" class="boton">Actualizar</a>
 
 </div>
 

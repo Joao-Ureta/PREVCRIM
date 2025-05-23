@@ -18,6 +18,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // id_institucion fijo para Carabineros
         $id_institucion = 1;
 
+        // Verificar si el RUT ya existe
+        $verificar = $conn->prepare("SELECT rut FROM usuario WHERE rut = ?");
+        $verificar->bind_param("s", $rut);
+        $verificar->execute();
+        $verificar->store_result();
+
+        if ($verificar->num_rows > 0) {
+            echo "<script>alert('Error: El RUT ingresado ya está registrado.'); window.history.back();</script>";
+            exit;
+        }
+
+        // Insertar nuevo usuario
         $sql = "INSERT INTO usuario (nombre_completo, rut, correo, contrasena, rol, id_institucion)
                 VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
@@ -37,3 +49,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "<script>alert('Acceso inválido'); window.location.href='../vistas/instituciones/carabineros/ingresar_usuario.php';</script>";
 }
 ?>
+

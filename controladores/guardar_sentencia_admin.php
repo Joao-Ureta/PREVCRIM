@@ -29,7 +29,7 @@ if (
 
     // Ejecutar y verificar
     if ($conn->query($sql) === TRUE) {
-        echo "<script>alert('Sentencia registrada correctamente'); window.location.href='../vistas/instituciones/carabineros/operador/ver_sentencia.php';</script>";
+        echo "<script>alert('Sentencia registrada correctamente'); window.location.href='../vistas/instituciones/carabineros/admin/ver_sentencia.php';</script>";
     } else {
         echo "Error al guardar la sentencia: " . $conn->error;
     }
@@ -40,4 +40,3 @@ if (
 
 $conn->close();
 ?>
-

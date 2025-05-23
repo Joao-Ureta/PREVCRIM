@@ -158,7 +158,7 @@
                 <a href="login_pc.php?institucion=pazciudadana">
                     <img src="/SIPC/estaticos/img/paz_ciudadana.jpg" alt="Paz Ciudadana">
                 </a>
-				<a href="login.php?institucion=pdi">
+				<a href="login_pdi.php?institucion=pdi">
                     <img src="/SIPC/estaticos/img/pdi.jpg" alt="PDI">
                 </a>
                 <a href="login.php?institucion=seguridados10">

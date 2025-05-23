@@ -37,23 +37,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmtBitacora->bind_param("is", $id_usuario, $actividad);
                 $stmtBitacora->execute();
 
-                // Verificar si la institución es "Paz ciudadana"
-                $institucion_paz_ciudadana = 3; // Asegúrate de que este ID corresponde a "Paz ciudadana"
+                // Verificar si la institución es "PDI"
+                $institucion_pdi = 5; // Asegúrate de que este ID corresponde a "PDI"
 
                 switch ($_SESSION['rol']) {
                     case 'Administrador':
-                        if ($_SESSION['id_institucion'] == $institucion_paz_ciudadana) {
-                            header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/admin_pc.php');
+                        if ($_SESSION['id_institucion'] == $institucion_pdi) {
+                            header('Location: http://localhost/SIPC/vistas/instituciones/pdi/admin_pdi.php');
                             exit();
                         } else {
                             $error = "❌ No tienes permiso para acceder a esta sección.";
                         }
                         break;
                     case 'JefeZona':
-                        header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/jefe_zona.php.php');
+                        header('Location: http://localhost/SIPC/vistas/instituciones/pdi/jefe_zona.php.php');
                         exit();
                     case 'Operador':
-                        header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/operador.php.php');
+                        header('Location: http://localhost/SIPC/vistas/instituciones/pdi/operador.php.php');
                         exit();
                     default:
                         $error = "⚠️ Rol no válido.";
@@ -79,12 +79,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/docs.css" rel="stylesheet"> 
     <script src="js/bootstrap.bundle.min.js"></script> 
-    <title>Login - Paz ciudadana</title>
+    <title>Login - PDI</title>
 	
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #C0C0C0;
+            background:rgb(220, 220, 220);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .login-container {
-			background: linear-gradient(45deg, #BEBEBE, #D0D0D0, #E0E0E0);
+			background: #0033A0;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -131,13 +131,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         h2 {
             text-align: center;
             margin-bottom: 20px;
-            color: black;
+            color: white;
         }
 
         label {
             display: block;
             margin: 10px 0 5px;
-            color: black;
+            color: white;
         }
 
         input {
@@ -151,8 +151,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         button {
             width: 100%;
             padding: 10px;
-            background-color: #808080;
-            color: white;
+            background-color: #FFD700;
+            color: black;
             border: none;
             border-radius: 4px;
             font-size: 16px;
@@ -160,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         button:hover {
-            background-color: #A9A9A9;
+            background-color: #4D70B8;
         }
 
         .error-message {
@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .help-link a, .return-link a {
-            color: black;
+            color: white;
             text-decoration: none;
         }
 
@@ -189,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 		
 		footer {
-            background: linear-gradient(45deg, #BEBEBE, #D0D0D0, #E0E0E0);
+            background-color: #FFD700;
 			text-align: center;
             color: black;
             padding: 10px;
@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	</br></br>
     <div class="login-container">
         <div class="logo-container">
-            <img src="/SIPC/estaticos/img/paz_ciudadana.jpg" alt="Paz Ciudadana">
+            <img src="/SIPC/estaticos/img/pdi.jpg" alt="Paz Ciudadana">
         </div>
         <div class="login-form">
             <h2>Inicio de Sesión</h2>
