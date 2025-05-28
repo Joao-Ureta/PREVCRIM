@@ -1,0 +1,108 @@
+<?php
+include_once($_SERVER['DOCUMENT_ROOT'] . '/SIPC/config/config.php');
+
+if (isset($_POST['id_delincuente'])) {
+    $idDelincuente = $_POST['id_delincuente'];
+
+    $sql = "SELECT 
+        d.id_delincuente,
+        d.rut,
+        d.nombre_completo AS nombre,
+        d.apodo,
+        d.antecedentes,
+        d.foto,
+        d.nacionalidad,
+        d.estado_judicial,
+		d.direccion_particular,
+        d.id_sector AS sector_id,
+        t.nombre_tipo AS tipo_delito,
+        del.fecha AS fecha_delito,
+        del.descripcion AS descripcion_delito,
+        del.latitud AS latitud_delito,
+        del.longitud AS longitud_delito,
+        s.nombre_sector AS sector_nombre,
+        s.latitud AS sector_latitud,
+        s.longitud AS sector_longitud,
+        comu.nombre_comuna AS comuna_delincuente,
+        c.nombre_comuna AS comuna_delito,
+        ci.nombre_ciudad AS ciudad_delito,
+        r.nombre_region AS region_delito
+    FROM 
+        delincuente d
+    JOIN 
+        delito_delincuente dd ON d.id_delincuente = dd.id_delincuente
+    JOIN 
+        delito del ON dd.id_delito = del.id_delito
+    JOIN 
+        tipo_delito t ON del.id_tipo_delito = t.id_tipo_delito
+    JOIN 
+        sector s ON d.id_sector = s.id_sector
+    JOIN 
+        comuna c ON del.id_institucion IS NOT NULL AND c.id_comuna = (
+            SELECT i.id_comuna 
+            FROM institucion i 
+            WHERE i.id_institucion = del.id_institucion
+        )
+    JOIN 
+        ciudad ci ON c.id_ciudad = ci.id_ciudad
+    JOIN 
+        region r ON ci.id_region = r.id_region
+    LEFT JOIN 
+        comuna comu ON d.id_comuna = comu.id_comuna
+    WHERE 
+        d.id_delincuente = ?";
+
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("i", $idDelincuente);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $delincuente = $result->fetch_assoc();
+
+            $foto = !empty($delincuente['foto']) ? $delincuente['foto'] : 'ruta/a/imagen/default.jpg';
+
+            echo '
+            <div>
+                <h4>' . $delincuente['nombre'] . ' (' . $delincuente['apodo'] . ')</h4>
+                <p><strong>RUT:</strong> ' . $delincuente['rut'] . '</p>
+                <p><strong>Antecedentes:</strong> ' . $delincuente['antecedentes'] . '</p>
+                <p><strong>Nacionalidad:</strong> ' . $delincuente['nacionalidad'] . '</p>
+                <p><strong>Estado Judicial:</strong> ' . $delincuente['estado_judicial'] . '</p>
+				<p><strong>Direccion de residencia:</strong> ' . $delincuente['direccion_particular'] . '</p>
+                <p><strong>Comuna de Residencia:</strong> ' . $delincuente['comuna_delincuente'] . '</p>
+                <hr>
+                <p><strong>Delito:</strong> ' . $delincuente['tipo_delito'] . '</p>
+                <p><strong>Fecha del Delito:</strong> ' . $delincuente['fecha_delito'] . '</p>
+                <p><strong>Descripción del Delito:</strong> ' . $delincuente['descripcion_delito'] . '</p>
+                <p><strong>Ubicación del Delito:</strong> ' . $delincuente['sector_nombre'] . ', ' . $delincuente['comuna_delito'] . ', ' . $delincuente['ciudad_delito'] . ', ' . $delincuente['region_delito'] . '</p>
+                
+                <img src="/SIPC/' . $foto . '" class="img-fluid" alt="Foto de ' . $delincuente['nombre'] . '">
+                </br></br></br>
+                <div id="mapa" style="height: 400px; width: 100%;"></div>
+            </div>
+            <script>
+                function initMap() {
+                    var ubicacion = { lat: ' . $delincuente['latitud_delito'] . ', lng: ' . $delincuente['longitud_delito'] . ' };
+                    var map = new google.maps.Map(document.getElementById("mapa"), {
+                        zoom: 12,
+                        center: ubicacion
+                    });
+                    var marker = new google.maps.Marker({
+                        position: ubicacion,
+                        map: map
+                    });
+                }
+
+                var script = document.createElement("script");
+                script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyA3wzdatwG0njMap89LqBnbWdGFfd73Vsk&callback=initMap";
+                script.async = true;
+                document.body.appendChild(script);
+            </script>
+            ';
+        } else {
+            echo '<p>No se encontraron detalles para este delincuente.</p>';
+        }
+    }
+}
+?>

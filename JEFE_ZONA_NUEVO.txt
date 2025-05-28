@@ -1,0 +1,181 @@
+<?php
+session_start();
+if ($_SESSION['rol'] != 'JefeZona') {
+    header("Location: login.php");
+    exit;
+}
+
+include('../../../config/config.php');
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Jefe de Zona</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .card-img-top {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        #mapa {
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="container my-5">
+    <h2 class="mb-4 text-center">Delincuentes registrados</h2>
+    <div class="row">
+        <?php
+        // Consulta con JOIN para obtener los datos necesarios
+        $sql = "
+            SELECT d.id_delincuente, d.foto, d.nombre_completo, d.apodo, d.edad, d.genero, d.estado_judicial, 
+                   d.direccion_particular, c.nombre_comuna 
+            FROM delincuente d
+            JOIN comuna c ON d.id_comuna = c.id_comuna
+        ";
+
+        $res = $conn->query($sql);
+        while ($row = $res->fetch_assoc()) {
+            $foto = $row['foto'];
+            if (!str_contains($foto, 'estaticos/img/')) {
+                $foto_url = "http://localhost/SIPC/estaticos/img/" . $foto;
+            } else {
+                $foto_url = "http://localhost/SIPC/" . $foto;
+            }
+        ?>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="<?php echo $foto_url; ?>" class="card-img-top" alt="Foto" onerror="this.src='http://localhost/SIPC/estaticos/img/delincuente_default.png';">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $row['nombre_completo']; ?></h5>
+                        <p class="card-text"><strong>Apodo:</strong> <?php echo $row['apodo']; ?></p>
+                        <p class="card-text"><strong>Edad:</strong> <?php echo $row['edad']; ?></p>
+                        <p class="card-text"><strong>Género:</strong> <?php echo $row['genero']; ?></p>
+                        <p class="card-text"><strong>Estado Judicial:</strong> <?php echo $row['estado_judicial']; ?></p>
+                        <p class="card-text"><strong>Domicilio:</strong> <?php echo $row['direccion_particular']; ?></p>
+                        <p class="card-text"><strong>Comuna:</strong> <?php echo $row['nombre_comuna']; ?></p>
+                        <button class="btn btn-primary ver-detalles" data-id="<?php echo $row['id_delincuente']; ?>">Ver detalles</button>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalDetalles" tabindex="-1" aria-labelledby="modalDetallesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold">Detalles del delincuente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body" id="contenidoModal">
+        <!-- Aquí se cargan los datos con JS -->
+      </div>
+      <div id="mapa"></div>
+      <div class="modal-footer">
+        <button class="btn btn-success" id="btnGenerarPDF">Generar Reporte</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3wzdatwG0njMap89LqBnbWdGFfd73Vsk&callback=initMap"></script>
+
+<script>
+let mapa;
+let marcadores = [];
+
+function initMap() {
+    mapa = new google.maps.Map(document.getElementById('mapa'), {
+        zoom: 10,
+        center: { lat: -33.4489, lng: -70.6693 } // Santiago de Chile por defecto
+    });
+}
+
+function limpiarMapa() {
+    marcadores.forEach(m => m.setMap(null));
+    marcadores = [];
+}
+
+$(document).ready(function(){
+    $('.ver-detalles').click(function(){
+        let id = $(this).data('id');
+        $.ajax({
+            url: 'get_delincuentes.php',
+            type: 'POST',
+            data: {id: id},
+            dataType: 'json',
+            success: function(response){
+                const d = response.delincuente;
+                const delitos = response.delitos;
+
+                let html = ` 
+                <div class="row">
+                    <div class="col-md-4"><img src="${d.foto}" class="img-fluid rounded"></div>
+                    <div class="col-md-8">
+                        <p><strong>Nombre:</strong> ${d.nombre_completo}</p>
+                        <p><strong>Apodo:</strong> ${d.apodo}</p>
+                        <p><strong>Edad:</strong> ${d.edad}</p>
+                        <p><strong>Género:</strong> ${d.genero}</p>
+                        <p><strong>Estado Judicial:</strong> ${d.estado_judicial}</p>
+                        <p><strong>Domicilio:</strong> ${d.direccion_particular}</p>
+                        <p><strong>Comuna:</strong> ${d.nombre_comuna}</p>
+                    </div>
+                </div>
+                <hr>
+                <h5>Delitos asociados</h5>
+                <ul>`;
+
+                delitos.forEach(delito => {
+                    html += `<li><strong>${delito.fecha}:</strong> ${delito.descripcion}</li>`;
+                });
+                html += `</ul>`;
+
+                $('#contenidoModal').html(html);
+
+                limpiarMapa();
+                if (delitos.length > 0) {
+                    mapa.setCenter({lat: parseFloat(delitos[0].latitud), lng: parseFloat(delitos[0].longitud)});
+                    delitos.forEach(delito => {
+                        let marcador = new google.maps.Marker({
+                            position: {lat: parseFloat(delito.latitud), lng: parseFloat(delito.longitud)},
+                            map: mapa,
+                            title: delito.descripcion
+                        });
+                        marcadores.push(marcador);
+                    });
+                }
+
+                $('#modalDetalles').modal('show');
+            }
+        });
+    });
+
+    $('#btnGenerarPDF').click(function(){
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.html(document.querySelector('#contenidoModal'), {
+            callback: function (doc) {
+                doc.save("reporte_delincuente.pdf");
+            },
+            x: 10,
+            y: 10
+        });
+    });
+});
+</script>
+
+</body>
+</html>
