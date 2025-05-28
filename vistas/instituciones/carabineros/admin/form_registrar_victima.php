@@ -1,80 +1,36 @@
-<!-- PESTAÑA INGRESAR USUARIO DE ADMIN CARABINEROS -->
+<!-- PESTAÑA REGISTRAR VICTIMA ADMIN CARABINEROS -->
+
+<?php
+// Conexión a la base de datos
+require_once("../../../../config/config.php"); 
+?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Nuevo Usuario</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  
-
-  
-  <style>
-        body {
+    <meta charset="UTF-8">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Registrar Víctima</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+	
+	<style>
+	body {
             font-family: Arial, sans-serif;
             background-color: #2E8B57;
             color: white;
             text-align: center;
             margin-top: 0;
         } 
-		
+				
 		.dropdown-menu {
 			background-color: #0b6623;
 		  }
 
 		  .dropdown-item:hover {
-			background-color: #0e7d2d;
+			background-color: #00FF7F;
 		  }
-		
-		/* Estilos para el formulario */
-		.container {
-			display: flex;
-			flex-direction: column; /* Asegura que los elementos dentro estén en columna */
-			justify-content: center;
-			align-items: center;
-			text-align: left;
-			width: 80%;
-			max-width: 800px;
-			padding: 80px;
-			background-color:#0b6623;
-			border-radius: 10px;
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.90); /* Efecto de sombra con relieve */
-			margin: 50px auto; /* Centra horizontalmente y añade margen superior/inferior */
-			
-		}
-		
-		label.form-label {
-    font-weight: bold;
-    color: white;
-    text-align: left;
-    display: block;
-  }
 
-  small.form-text {
-    color: white !important;
-  }
-
-  .btn-success {
-    background-color: #2E8B57;
-    color: white;
-    font-weight: bold;
-    border: none;
-    display: block;
-    margin: 0 auto;
-    padding: 10px 20px;
-  }
-
-  .btn-success:hover {
-    background-color: #00FF7F;
-  }
-
-  input.form-control {
-    border-radius: 6px;
-  }
-	
 		.navbar a,
 		  .navbar .nav-link,
 		  .navbar .navbar-brand,
@@ -84,9 +40,38 @@
 		  .search-bar button {
 			color: white !important;
 		  }
-
+		  
+		  .container {
+            background: #0b6623;
+            padding: 20px;
+			text-align: left;
+            max-width: 700px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
 		
-		footer {
+		h2 { text-align: center; color: white; }
+		
+		small.form-text {
+			color: white !important;
+		}
+
+		.btn {
+			background-color: #2E8B57;
+			color: white;
+			font-weight: bold;
+			border: none;
+			display: block;
+			margin: 0 auto;
+			padding: 10px 20px;
+		  }
+
+		.btn:hover {
+			background-color: #00FF7F;
+		  }
+		  
+		 footer {
             background-color: #0b6623;
             color: white;
             padding: 10px;
@@ -94,9 +79,11 @@
             bottom: 0;
             width: 100%;
         }
-		</style>
+	</style>
+	
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg" style="background-color: #0b6623;">
   <div class="container-fluid">
     <div class="logo-container" style="margin-right: 40px;">
@@ -196,91 +183,117 @@
 </nav>
 </br></br>
 
-  <div class="container">
-    <h2>Ingresar Nuevo Usuario</h2>
-	</br></br>
-    <form action="../../../../controladores/guardar_usuario_admin.php" method="POST" id="formNuevoUsuario">
-  <div class="mb-3">
-    <label for="nombre_completo" class="form-label">Nombre completo</label>
-    <input type="text" class="form-control" id="nombre_completo" name="nombre_completo" required>
-  </div>
+<div class="container mt-5">
+    <h2>Registrar Nueva Víctima</h2>
+    <form action="../../../../controladores/guardar_victima_admin.php" method="POST">
 
-  <div class="mb-3">
-    <label for="rut" class="form-label">RUT</label>
-    <input type="text" class="form-control" id="rut" name="rut" required>
-    <small class="form-text text-muted">Ejemplo: 12345678-9 (sin puntos)</small>
-  </div>
+        <div class="mb-3">
+			<label for="rut">RUT</label>
+			<input type="text" id="rut" name="rut" class="form-control" required>
+			<small class="form-text text-muted">Ejemplo: 12345678-9 (sin puntos)</small>
+		</div>
 
-  <div class="mb-3">
-    <label for="correo" class="form-label">Correo</label>
-    <input type="email" class="form-control" id="correo" name="correo" required>
-  </div>
+        <div class="mb-3">
+            <label>Nombres</label>
+            <input type="text" name="nombres" class="form-control" required>
+        </div>
 
-  <div class="mb-3">
-    <label for="contrasena" class="form-label">Contraseña:</label>
-    <input type="password" class="form-control" id="contrasena" name="contrasena" required>
-    <small class="form-text text-muted">
-      La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una letra minúscula, un número y un carácter especial.
-    </small>
-  </div>
+        <div class="mb-3">
+            <label>Apellidos</label>
+            <input type="text" name="apellidos" class="form-control" required>
+        </div>
 
-  <div class="mb-3">
-      <label for="rol" class="form-label">Rol</label>
-      <select class="form-select" id="rol" name="rol" required>
-        <option value="">Seleccione un rol</option>
-        <option value="JefeZona">Jefe de Zona</option>
-        <option value="Operador">Operador</option>
-      </select>
-    </div>
-      </br></br>
-  <input type="hidden" name="rol" value="Operador">
+        <div class="mb-3">
+            <label>Edad</label>
+            <input type="number" name="edad" class="form-control" required>
+        </div>
 
-  <button type="submit" class="btn btn-success">Registrar operador</button>
-</form>
-  </div>
+        <div class="mb-3">
+            <label>Sexo</label>
+            <select name="sexo" class="form-select" required>
+                <option value="">Seleccione</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Otro">Otro</option>
+            </select>
+        </div>
 
-<!-- Funcion de validacion de rut Modulo 11 -->
-  <script>
-  // Validar RUT con Módulo 11
-  function validarRUT(rut) {
-    rut = rut.replace(/\./g, "").replace("-", "");
-    let cuerpo = rut.slice(0, -1);
-    let dv = rut.slice(-1).toUpperCase();
+        <div class="mb-3">
+            <label>Nacionalidad</label>
+            <input type="text" name="nacionalidad" class="form-control">
+        </div>
 
-    let suma = 0;
-    let multiplo = 2;
+        <div class="mb-3">
+            <label>Dirección</label>
+            <input type="text" name="direccion" class="form-control">
+        </div>
 
-    for (let i = cuerpo.length - 1; i >= 0; i--) {
-      suma += parseInt(cuerpo.charAt(i)) * multiplo;
-      multiplo = multiplo < 7 ? multiplo + 1 : 2;
+        <div class="mb-3">
+            <label>Teléfono</label>
+            <input type="text" name="telefono" class="form-control">
+        </div>
+
+        <!-- Delito asociado (opcional) -->
+        <div class="mb-3">
+            <label>Delito Asociado (opcional)</label>
+            <select class="form-select" name="id_delito">
+                <option value="">No vincular aún</option>
+                <?php
+                $query = "
+                    SELECT d.id_delito, d.fecha, d.descripcion, td.nombre_tipo 
+                    FROM delito d
+                    JOIN tipo_delito td ON d.id_tipo_delito = td.id_tipo_delito
+                    ORDER BY d.fecha DESC
+                ";
+                $resultado = mysqli_query($conn, $query);
+                while($fila = mysqli_fetch_assoc($resultado)) {
+                    $desc_corta = substr($fila['descripcion'], 0, 50);
+                    echo "<option value='{$fila['id_delito']}'>[{$fila['nombre_tipo']}] {$fila['fecha']} - {$desc_corta}...</option>";
+                }
+                ?>
+            </select>
+        </div>
+</br></br>
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </form>
+</div>
+
+<script>
+function validarRut($rut) {
+    // Eliminar puntos y guion
+    $rut = str_replace([".", "-"], "", $rut);
+    
+    // Verificar que el RUT tenga la longitud correcta
+    if (strlen($rut) < 8 || strlen($rut) > 9) {
+        return false;
     }
 
-    let dvEsperado = 11 - (suma % 11);
-    dvEsperado = dvEsperado === 11 ? "0" : dvEsperado === 10 ? "K" : dvEsperado.toString();
+    // Obtener el dígito verificador (último caracter)
+    $dv = strtoupper(substr($rut, -1));
 
-    return dv === dvEsperado;
-  }
+    // Obtener el RUT sin el dígito verificador
+    $rutNumerico = substr($rut, 0, -1);
 
-  document.getElementById("formNuevoUsuario").addEventListener("submit", function(e) {
-    const rut = document.getElementById("rut").value;
-    const clave = document.getElementById("contrasena").value;
+    // Calcular el dígito verificador usando el algoritmo Módulo 11
+    $suma = 0;
+    $multiplicador = 2;
 
-    if (!validarRUT(rut)) {
-      e.preventDefault();
-      Swal.fire("Error", "El RUT ingresado no es válido.", "error");
-      return;
+    for ($i = strlen($rutNumerico) - 1; $i >= 0; $i--) {
+        $suma += intval($rut[$i]) * $multiplicador;
+        $multiplicador = $multiplicador == 7 ? 2 : $multiplicador + 1;
     }
 
-    const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    if (!regexPassword.test(clave)) {
-      e.preventDefault();
-      Swal.fire("Error", "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.", "error");
-    }
-  });
+    $resto = $suma % 11;
+    $dvCalculado = 11 - $resto;
+
+    if ($dvCalculado == 11) $dvCalculado = '0';
+    elseif ($dvCalculado == 10) $dvCalculado = 'K';
+
+    return $dv == $dvCalculado;
+}
 </script>
 
-</br></br></br>
-
+</br></br></br></br>
 <footer>
     &copy; 2025 Sistema Integrado de Prevención de Crímenes (SIPC) - Todos los derechos reservados.
 </footer>

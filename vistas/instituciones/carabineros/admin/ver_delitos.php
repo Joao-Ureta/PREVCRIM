@@ -1,3 +1,5 @@
+<!-- PESTAÑA VER DELITOS ADMIN CARABINEROS -->
+
 <?php
 // Conexión a la base de datos
 require_once("../../../../config/config.php"); 
@@ -152,11 +154,36 @@ if ($result->num_rows > 0) {
   <div class="container-fluid">
     <div class="logo-container" style="margin-right: 40px;">
         <img src="/SIPC/estaticos/img/carabineros.png" alt="Carabineros de Chile" width="120">
-		<a class="navbar-brand" href="operador.php">Operador</a>
+		<a class="navbar-brand" href="admin.php">Administrador</a>
     </div>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Administracion de usuarios
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="ingresar_usuario.php">Ingresar nuevo usuario</a></li>
+            <li><a class="dropdown-item" href="eliminar_usuario.php">Eliminar usuario</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+		
+		<li class="nav-item dropdown">
+		  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+			Reportes
+		  </a>
+		  <ul class="dropdown-menu">
+			<li><a class="dropdown-item" href="reporte_zonas_conflictivas.php">Zonas conflictivas</a></li>
+			<li><a class="dropdown-item" href="ubicacion_delincuentes.php">Ubicación de delincuentes</a></li>
+			<li><a class="dropdown-item" href="reporte_tipos_delitos.php">Tipos de delitos</a></li>
+			<li><a class="dropdown-item" href="ver_controles.php">Controles preventivos</a></li>
+			<li><a class="dropdown-item" href="ver_sentencia.php">Reporte de sentencias</a></li>
+		  </ul>
+		</li>
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -209,7 +236,6 @@ if ($result->num_rows > 0) {
 			<li><a class="dropdown-item" href="ver_sentencia.php">Ver Sentencias</a></li>
 		  </ul>
 		</li>
-
 
       </ul>
       <div class="return-link">

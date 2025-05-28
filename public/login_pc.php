@@ -43,17 +43,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 switch ($_SESSION['rol']) {
                     case 'Administrador':
                         if ($_SESSION['id_institucion'] == $institucion_paz_ciudadana) {
-                            header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/admin_pc.php');
+                            header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/admin/admin_pc.php');
                             exit();
                         } else {
                             $error = "❌ No tienes permiso para acceder a esta sección.";
                         }
                         break;
                     case 'JefeZona':
-                        header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/jefe_zona.php.php');
+                        header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/jefe_zona/jefe_zona.php.php');
                         exit();
                     case 'Operador':
-                        header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/operador.php.php');
+                        header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/operador/operador.php.php');
                         exit();
                     default:
                         $error = "⚠️ Rol no válido.";

@@ -1,7 +1,10 @@
-<!-- PESTAÑA REPORTE PDF SENTENCIAS DE ADMIN CARABINEROS -->
-
+<!-- PESTAÑA REPORTE PDF ADMIN CARABINEROS -->
 <?php
-require __DIR__ . '../../../../../vendor/autoload.php'; // Carga Composer
+// Evitar que cualquier warning o notice interfiera con el PDF
+error_reporting(0);
+ini_set('display_errors', 0);
+
+require __DIR__ . '/../../../../vendor/autoload.php';
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -9,12 +12,12 @@ use Dompdf\Options;
 // Conexión a la base de datos
 include_once($_SERVER['DOCUMENT_ROOT'] . '/SIPC/config/config.php');
 
-// Parámetros del formulario
-$fecha_sentencia = $_POST['fecha_sentencia'] ?? '';
-$delincuente = $_POST['delincuente'] ?? '';
-$tribunal = $_POST['tribunal'] ?? '';
+// Parámetros del formulario con escape para seguridad
+$fecha_sentencia = $conn->real_escape_string($_POST['fecha_sentencia'] ?? '');
+$delincuente = $conn->real_escape_string($_POST['delincuente'] ?? '');
+$tribunal = $conn->real_escape_string($_POST['tribunal'] ?? '');
 
-// Consulta SQL
+// Construcción de la consulta
 $sql = "
     SELECT 
         s.id_sentencia, 
@@ -43,12 +46,18 @@ if ($tribunal) {
 }
 
 $result = $conn->query($sql);
-$sentencias = [];
-while ($row = $result->fetch_assoc()) {
-    $sentencias[] = $row;
+if (!$result) {
+    // Mejor no hacer die, sino mostrar tabla vacía en PDF
+    $sentencias = [];
+} else {
+    $sentencias = [];
+    while ($row = $result->fetch_assoc()) {
+        $sentencias[] = $row;
+    }
 }
 
-// Inicia captura de HTML
+// Limpiar buffers previos y empezar captura limpia
+if (ob_get_length()) ob_end_clean();
 ob_start();
 ?>
 
@@ -72,15 +81,22 @@ ob_start();
         table {
             width: 100%;
             border-collapse: collapse;
+            page-break-inside: auto;
         }
         thead {
             background-color: #2c3e50;
             color: white;
+            display: table-header-group; /* Que el encabezado se repita si hay salto de página */
         }
         th, td {
             border: 1px solid #333;
             padding: 6px;
             text-align: center;
+            vertical-align: middle;
+        }
+        tbody tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
         }
     </style>
 </head>
@@ -121,18 +137,21 @@ ob_start();
 </html>
 
 <?php
-$html = ob_get_clean(); // Finaliza captura de HTML
+$html = ob_get_clean();
 
-// Configura Dompdf
+// Opciones Dompdf
 $options = new Options();
-$options->set('isRemoteEnabled', true); // Habilita imágenes remotas
+$options->set('isRemoteEnabled', true); // Permite cargar imágenes remotas (si hay)
 
+// Inicializar Dompdf
 $dompdf = new Dompdf($options);
 $dompdf->loadHtml($html);
 $dompdf->setPaper('A4', 'landscape');
+
+// Renderizar PDF
 $dompdf->render();
 
-// Descarga el PDF
+// Forzar descarga
 $nombreArchivo = "reporte_sentencias_" . date('Y-m-d') . ".pdf";
-$dompdf->stream($nombreArchivo, ["Attachment" => true]); // "Attachment" => false para abrir en el navegador
-?>
+$dompdf->stream($nombreArchivo, ["Attachment" => true]);
+exit; // Muy importante para evitar salida extra

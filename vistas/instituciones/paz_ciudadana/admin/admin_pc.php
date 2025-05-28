@@ -4,7 +4,7 @@ if ($_SESSION['rol'] != 'Administrador') {
     header("Location: login_pc.php");
     exit;
 }
-include_once '../../../config/config.php';
+include_once '../../../../config/config.php';
 
 
 $sql = "SELECT id_delincuente, nombre_completo, rut, edad, genero, apodo, antecedentes, foto, nacionalidad, id_sector, estado_judicial FROM delincuente";
@@ -34,7 +34,7 @@ $result = $conn->query($sql);
         body {
             font-family: Arial, sans-serif;
             background: linear-gradient(45deg, #BEBEBE, #D0D0D0, #E0E0E0);
-            color: white;
+            color: black;
             text-align: center;
             margin-top: 0;
         }

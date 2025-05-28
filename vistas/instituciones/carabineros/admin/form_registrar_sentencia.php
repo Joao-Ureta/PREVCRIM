@@ -1,80 +1,52 @@
-<!-- PESTAÑA INGRESAR USUARIO DE ADMIN CARABINEROS -->
+<!-- PESTAÑA REGISTRAR SENTENCIA ADMIN CARABINEROS -->
+
+<?php
+// Conexión a la base de datos
+require_once("../../../../config/config.php"); 
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Obtener delincuentes
+$delincuentes = $conn->query("SELECT id_delincuente, nombre_completo, rut FROM delincuente");
+
+// Obtener tribunales
+$tribunales = $conn->query("SELECT id_tribunal, nombre FROM tribunales");
+
+// Obtener delitos
+$delitos = $conn->query("
+    SELECT d.id_delito, td.nombre_tipo, d.fecha 
+    FROM delito d
+    LEFT JOIN tipo_delito td ON d.id_tipo_delito = td.id_tipo_delito
+    ORDER BY d.fecha DESC
+");
+?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Nuevo Usuario</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  
-
-  
-  <style>
-        body {
+    <meta charset="UTF-8">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <title>Registrar Sentencia</title>
+    	<style>
+	body {
             font-family: Arial, sans-serif;
             background-color: #2E8B57;
             color: white;
             text-align: center;
             margin-top: 0;
         } 
-		
+				
 		.dropdown-menu {
 			background-color: #0b6623;
 		  }
 
 		  .dropdown-item:hover {
-			background-color: #0e7d2d;
+			background-color: #00FF7F;
 		  }
-		
-		/* Estilos para el formulario */
-		.container {
-			display: flex;
-			flex-direction: column; /* Asegura que los elementos dentro estén en columna */
-			justify-content: center;
-			align-items: center;
-			text-align: left;
-			width: 80%;
-			max-width: 800px;
-			padding: 80px;
-			background-color:#0b6623;
-			border-radius: 10px;
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.90); /* Efecto de sombra con relieve */
-			margin: 50px auto; /* Centra horizontalmente y añade margen superior/inferior */
-			
-		}
-		
-		label.form-label {
-    font-weight: bold;
-    color: white;
-    text-align: left;
-    display: block;
-  }
 
-  small.form-text {
-    color: white !important;
-  }
-
-  .btn-success {
-    background-color: #2E8B57;
-    color: white;
-    font-weight: bold;
-    border: none;
-    display: block;
-    margin: 0 auto;
-    padding: 10px 20px;
-  }
-
-  .btn-success:hover {
-    background-color: #00FF7F;
-  }
-
-  input.form-control {
-    border-radius: 6px;
-  }
-	
 		.navbar a,
 		  .navbar .nav-link,
 		  .navbar .navbar-brand,
@@ -84,7 +56,34 @@
 		  .search-bar button {
 			color: white !important;
 		  }
+		  
+		  .container{
+            background: #0b6623;
+			color: black;
+			font-weight: bold;
+            padding: 20px;
+			text-align: left;
+            max-width: 700px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+		
+		h2 { text-align: center; color: white; }
+		
+		.btn {
+			background-color: #2E8B57;
+			color: white;
+			font-weight: bold;
+			border: none;
+			display: block;
+			margin: 0 auto;
+			padding: 10px 20px;
+		  }
 
+		.btn:hover {
+			background-color: #00FF7F;
+		  }
 		
 		footer {
             background-color: #0b6623;
@@ -94,9 +93,10 @@
             bottom: 0;
             width: 100%;
         }
-		</style>
+	</style>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg" style="background-color: #0b6623;">
   <div class="container-fluid">
     <div class="logo-container" style="margin-right: 40px;">
@@ -196,94 +196,82 @@
 </nav>
 </br></br>
 
-  <div class="container">
-    <h2>Ingresar Nuevo Usuario</h2>
-	</br></br>
-    <form action="../../../../controladores/guardar_usuario_admin.php" method="POST" id="formNuevoUsuario">
-  <div class="mb-3">
-    <label for="nombre_completo" class="form-label">Nombre completo</label>
-    <input type="text" class="form-control" id="nombre_completo" name="nombre_completo" required>
-  </div>
+<div class="container mt-5">
+	<h2 class="mb-4 text-center">Registrar Sentencia</h2>
+		<form action="../../../../controladores/guardar_sentencia_admin.php" method="POST" class="bg-white p-4 rounded shadow">
+			<div class="mb-3">
+				<label for="id_delincuente" class="form-label">Delincuente:</label>
+				<select id="id_delincuente" name="id_delincuente" class="form-select" required>
+					<option value="">Seleccione un delincuente</option>
+					<?php while ($d = $delincuentes->fetch_assoc()): ?>
+						<option value="<?= $d['id_delincuente'] ?>">
+							<?= $d['nombre_completo'] ?> (<?= $d['rut'] ?>)
+						</option>
+					<?php endwhile; ?>
+				</select>
+			</div>
+			
+			<div class="mb-3">
+				<label for="id_delito"class="form-label">Delito:</label>
+				<select name="id_delito"name="id_delito" class="form-select" required>
+					<option value="">Seleccione un delito</option>
+					<?php while ($dl = $delitos->fetch_assoc()): ?>
+						<option value="<?= $dl['id_delito'] ?>">
+							<?= $dl['nombre_tipo'] ?> - <?= $dl['fecha'] ?>
+						</option>
+					<?php endwhile; ?>
+				</select>
+			</div>
+			
+			<div class="mb-3">
+				<label for="id_tribunal" class="form-label">Tribunal:</label>
+				<select name="id_tribunal" class="form-select" required>
+					<option value="">Seleccione un tribunal</option>
+					<?php while ($t = $tribunales->fetch_assoc()): ?>
+						<option value="<?= $t['id_tribunal'] ?>"><?= $t['nombre'] ?></option>
+					<?php endwhile; ?>
+				</select>
+			</div>
 
-  <div class="mb-3">
-    <label for="rut" class="form-label">RUT</label>
-    <input type="text" class="form-control" id="rut" name="rut" required>
-    <small class="form-text text-muted">Ejemplo: 12345678-9 (sin puntos)</small>
-  </div>
+			
+			<?php
+				$hoy = date('Y-m-d');
+			?>
+			
+			<div class="mb-3">
+				<label for="fecha" class="form-label">Fecha de sentencia</label>
+				<input type="date" name="fecha" class="form-control" max="<?= date('Y-m-d') ?>" required>
+			</div>
+			
+			<div class="mb-3">
+				<label for="condena" class="form-label">Condena impuesta:</label>
+				<input type="text" id="condena" name="condena" class="form-control" required>
+			</div>
+			</br>
+			<div class="d-grid gap-2">
+				<button type="submit" class="btn btn-primary">Guardar Sentencia</button>
+			</div>
+		</form>
+</div>
 
-  <div class="mb-3">
-    <label for="correo" class="form-label">Correo</label>
-    <input type="email" class="form-control" id="correo" name="correo" required>
-  </div>
+<script>
+function validarFormulario() {
+    const tribunal = document.forms["formSentencia"]["tribunal"].value.trim();
+    const condena = document.forms["formSentencia"]["condena"].value.trim();
 
-  <div class="mb-3">
-    <label for="contrasena" class="form-label">Contraseña:</label>
-    <input type="password" class="form-control" id="contrasena" name="contrasena" required>
-    <small class="form-text text-muted">
-      La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una letra minúscula, un número y un carácter especial.
-    </small>
-  </div>
-
-  <div class="mb-3">
-      <label for="rol" class="form-label">Rol</label>
-      <select class="form-select" id="rol" name="rol" required>
-        <option value="">Seleccione un rol</option>
-        <option value="JefeZona">Jefe de Zona</option>
-        <option value="Operador">Operador</option>
-      </select>
-    </div>
-      </br></br>
-  <input type="hidden" name="rol" value="Operador">
-
-  <button type="submit" class="btn btn-success">Registrar operador</button>
-</form>
-  </div>
-
-<!-- Funcion de validacion de rut Modulo 11 -->
-  <script>
-  // Validar RUT con Módulo 11
-  function validarRUT(rut) {
-    rut = rut.replace(/\./g, "").replace("-", "");
-    let cuerpo = rut.slice(0, -1);
-    let dv = rut.slice(-1).toUpperCase();
-
-    let suma = 0;
-    let multiplo = 2;
-
-    for (let i = cuerpo.length - 1; i >= 0; i--) {
-      suma += parseInt(cuerpo.charAt(i)) * multiplo;
-      multiplo = multiplo < 7 ? multiplo + 1 : 2;
+    if (tribunal === "" || condena === "") {
+        alert("Por favor, complete todos los campos obligatorios.");
+        return false;
     }
-
-    let dvEsperado = 11 - (suma % 11);
-    dvEsperado = dvEsperado === 11 ? "0" : dvEsperado === 10 ? "K" : dvEsperado.toString();
-
-    return dv === dvEsperado;
-  }
-
-  document.getElementById("formNuevoUsuario").addEventListener("submit", function(e) {
-    const rut = document.getElementById("rut").value;
-    const clave = document.getElementById("contrasena").value;
-
-    if (!validarRUT(rut)) {
-      e.preventDefault();
-      Swal.fire("Error", "El RUT ingresado no es válido.", "error");
-      return;
-    }
-
-    const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    if (!regexPassword.test(clave)) {
-      e.preventDefault();
-      Swal.fire("Error", "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.", "error");
-    }
-  });
+    return true;
+}
 </script>
 
-</br></br></br>
-
+</br></br></br></br>
 <footer>
     &copy; 2025 Sistema Integrado de Prevención de Crímenes (SIPC) - Todos los derechos reservados.
 </footer>
 
 </body>
 </html>
+
