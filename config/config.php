@@ -3,7 +3,13 @@
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'Prevcrim');
 define('DB_USER', 'root');
-define('DB_PASS', '');
+
+// Detectar el entorno para asignar la contraseña adecuada
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    define('DB_PASS', '');  // Contraseña vacía para equipo local
+} else {
+    define('DB_PASS', 'Maju2223');  // Contraseña para equipo externo
+}
 
 // Crear la conexión
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -12,7 +18,7 @@ $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 } else {
-    // Si la conexión es exitosa, puedes seguir trabajando con la base de datos
-    //echo "Conexión exitosa"; // Esto puedes descomentarlo para comprobar si la conexión funciona.
+    //echo "Conexión exitosa";
 }
 ?>
+
