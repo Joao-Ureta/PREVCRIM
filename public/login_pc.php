@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
                         break;
                     case 'JefeZona':
-                        header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/jefe_zona/jefe_zona.php.php');
+                        header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/jefe_zona.php');
                         exit();
                     case 'Operador':
                         header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/operador/operador.php.php');
