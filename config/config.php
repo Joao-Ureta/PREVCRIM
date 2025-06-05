@@ -6,9 +6,9 @@ define('DB_USER', 'root');
 
 // Detectar el entorno para asignar la contraseña adecuada
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
-    define('DB_PASS', '');  // Contraseña vacía para equipo local
+    define('DB_PASS', 'Maju2223');  // Contraseña vacía para equipo local
 } else {
-    define('DB_PASS', 'Maju2223');  // Contraseña para equipo externo
+    define('DB_PASS', '');  // Contraseña para equipo externo
 }
 
 // Crear la conexión

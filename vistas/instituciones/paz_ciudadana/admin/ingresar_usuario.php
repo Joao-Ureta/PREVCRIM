@@ -226,15 +226,15 @@
   </div>
 
   <div class="mb-3">
-      <label for="rol" class="form-label">Rol</label>
-      <select class="form-select" id="rol" name="rol" required>
-        <option value="">Seleccione un rol</option>
-        <option value="JefeZona">Jefe de Zona</option>
-        <option value="Operador">Operador</option>
-      </select>
-    </div>
+  <label for="rol" class="form-label">Rol</label>
+  <select class="form-select" id="rol" name="rol" required>
+    <option value="">Seleccione un rol</option>
+    <option value="JefeZona">Jefe de Zona</option>
+    <option value="Operador">Operador</option>
+  </select>
+</div>
+
       </br></br>
-  <input type="hidden" name="rol" value="Operador">
 
   <button type="submit" class="btn btn-success">Registrar operador</button>
 </form>

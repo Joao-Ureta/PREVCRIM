@@ -233,7 +233,6 @@
       </select>
     </div>
       </br></br>
-  <input type="hidden" name="rol" value="Operador">
 
   <button type="submit" class="btn btn-success">Registrar operador</button>
 </form>

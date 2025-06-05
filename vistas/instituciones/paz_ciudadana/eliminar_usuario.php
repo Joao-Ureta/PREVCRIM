@@ -1,3 +1,4 @@
+<!-- PESTAÑA ELIMINAR USUARIO DE JEFE ZONA PAZ CIUDADANA -->
 <?php
 include("../../../config/config.php");
 
@@ -77,8 +78,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["rut_eliminar"])) {
 
 		 body {
             font-family: Arial, sans-serif;
-            background-color: #2E8B57;
-            color: white;
+            background: #D0D0D0;
+            color: black;
             text-align: center;
             margin-top: 0;
         } 
@@ -91,23 +92,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["rut_eliminar"])) {
 			width: 80%;
 			max-width: 800px;
 			padding: 80px;
-			background-color:#0b6623;
+			background-color: #C0C0C0;
 			border-radius: 10px;
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.90); /* Efecto de sombra con relieve */
 			margin: 50px auto; /* Centra horizontalmente y añade margen superior/inferior */
         }
 		
 		  input.form-control {
-    border-radius: 6px;
-  }
+            border-radius: 6px;
+        }
 	
 		
 		.dropdown-menu {
-			background-color: #0b6623;
+			background-color: #C0C0C0;
 		  }
 
 		  .dropdown-item:hover {
-			background-color: #0e7d2d;
+			background-color: #A9A9A9;
 		  }
 		
         label, p {
@@ -115,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["rut_eliminar"])) {
             margin-top: 10px;
         }
         .btn-buscar {
-            background-color: #2E8B57;
+            background-color: #808080;
             color: white;
             border: none;
             padding: 10px 15px;
@@ -124,8 +125,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["rut_eliminar"])) {
             cursor: pointer;
             border-radius: 5px;
         }
-        .btn:hover {
-            background-color: #00FF7F;
+        .btn-buscar:hover {
+            background-color: #D3D3D3;
         }
 		
 		.btn-eliminar {
@@ -139,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["rut_eliminar"])) {
             border-radius: 5px;
         }
         .btn-eliminar:hover {
-            background-color: #00FF7F;
+            background-color: #FA8072;
         }
 		
 		.navbar a,
@@ -149,12 +150,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["rut_eliminar"])) {
 		  .navbar .dropdown-item,
 		  .return-link a,
 		  .search-bar button {
-			color: white !important;
+			color: black !important;
 		  }
 		
 				footer {
-            background-color: #0b6623;
-            color: white;
+            background-color: #C0C0C0;
+            color: black;
             padding: 10px;
             position: fixed;
             bottom: 0;
@@ -164,10 +165,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["rut_eliminar"])) {
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg" style="background-color: #0b6623;">
+<nav class="navbar navbar-expand-lg" style="background: #C0C0C0;">
   <div class="container-fluid">
     <div class="logo-container" style="margin-right: 40px;">
-        <img src="/SIPC/estaticos/img/carabineros.png" alt="Carabineros de Chile" width="120">
+        <img src="/SIPC/estaticos/img/paz_ciudadana.jpg" alt="Carabineros de Chile" width="120">
 		<a class="navbar-brand" href="jefe_zona.php">JEFE DE ZONA</a>
     </div>
 
@@ -246,4 +247,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["rut_eliminar"])) {
 
 </body>
 </html>
-
