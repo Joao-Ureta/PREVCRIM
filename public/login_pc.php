@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/jefe_zona.php');
                         exit();
                     case 'Operador':
-                        header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/operador/operador.php.php');
+                        header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/operador/operador.php');
                         exit();
                     default:
                         $error = "⚠️ Rol no válido.";

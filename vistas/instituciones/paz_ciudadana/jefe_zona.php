@@ -944,7 +944,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </br></br></br>
 
 <div>
-    <button class="boton-reporteGeneral" onclick="window.location.href='/SIPC/vistas/instituciones/carabineros/reporte_todos_delincuentes.php'">Generar reporte</button>
+    <button class="boton-reporteGeneral" onclick="window.location.href='/SIPC/vistas/instituciones/paz_ciudadana/reporte_todos_delincuentes.php'">Generar reporte</button>
 </div>
 
 <!-- boton de generar reporte general -->
