@@ -1,10 +1,10 @@
-<!-- PESTAÑA PDF REPORTE DE SENTENCIAS DE JEFE ZONA PAZ CIUDADANA -->
+<!-- PESTAÑA REPORTE PDF ADMIN PDI -->
 <?php
 // Evitar que cualquier warning o notice interfiera con el PDF
 error_reporting(0);
 ini_set('display_errors', 0);
 
-require __DIR__ . '/../../../vendor/autoload.php';
+require __DIR__ . '/../../../../vendor/autoload.php';
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -155,4 +155,3 @@ $dompdf->render();
 $nombreArchivo = "reporte_sentencias_" . date('Y-m-d') . ".pdf";
 $dompdf->stream($nombreArchivo, ["Attachment" => true]);
 exit; // Muy importante para evitar salida extra
-

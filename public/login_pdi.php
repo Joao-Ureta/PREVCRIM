@@ -43,17 +43,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 switch ($_SESSION['rol']) {
                     case 'Administrador':
                         if ($_SESSION['id_institucion'] == $institucion_pdi) {
-                            header('Location: http://localhost/SIPC/vistas/instituciones/pdi/admin_pdi.php');
+                            header('Location: http://localhost/SIPC/vistas/instituciones/pdi/admin/admin_pdi.php');
                             exit();
                         } else {
                             $error = "❌ No tienes permiso para acceder a esta sección.";
                         }
                         break;
                     case 'JefeZona':
-                        header('Location: http://localhost/SIPC/vistas/instituciones/pdi/jefe_zona.php.php');
+                        header('Location: http://localhost/SIPC/vistas/instituciones/pdi/jefe_zona.php');
                         exit();
                     case 'Operador':
-                        header('Location: http://localhost/SIPC/vistas/instituciones/pdi/operador.php.php');
+                        header('Location: http://localhost/SIPC/vistas/instituciones/pdi/operador/operador.php');
                         exit();
                     default:
                         $error = "⚠️ Rol no válido.";

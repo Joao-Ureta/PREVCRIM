@@ -1,4 +1,4 @@
-<!-- PESTAÑA INGRESAR USUARIO DE ADMIN PAZ CIUDADANA -->
+<!-- PESTAÑA INGRESAR USUARIO DE ADMIN PDI -->
 
 <!DOCTYPE html>
 <html lang="es">
@@ -15,18 +15,18 @@
   <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(45deg, #BEBEBE, #D0D0D0, #E0E0E0);
-            color: black;
+            background-color: #dcdcdc;
+            color: white;
             text-align: center;
             margin-top: 0;
         } 
 		
 		.dropdown-menu {
-			background-color: #C0C0C0;
+			background-color: #0033A0;
 		  }
 
 		  .dropdown-item:hover {
-			background-color: #A9A9A9;
+			background-color: #FFCC00;
 		  }
 		
 		/* Estilos para el formulario */
@@ -39,7 +39,7 @@
 			width: 80%;
 			max-width: 800px;
 			padding: 80px;
-			background-color: #C0C0C0;
+			background-color: #0033A0;
 			border-radius: 10px;
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.90); /* Efecto de sombra con relieve */
 			margin: 50px auto; /* Centra horizontalmente y añade margen superior/inferior */
@@ -48,18 +48,18 @@
 		
 		label.form-label {
     font-weight: bold;
-    color: black;
+    color: white;
     text-align: left;
     display: block;
   }
 
   small.form-text {
-    color: black !important;
+    color: white !important;
   }
 
   .btn-success {
-    background-color: #808080;
-    color: white;
+    background-color: #FFCC00;
+    color: black;
     font-weight: bold;
     border: none;
     display: block;
@@ -68,8 +68,8 @@
   }
 
   .btn-success:hover {
-    background-color: #D3D3D3;
-    color: white;
+    background-color: #E6E6E6;
+    color: black;
   }
 
   input.form-control {
@@ -83,12 +83,12 @@
 		  .navbar .dropdown-item,
 		  .return-link a,
 		  .search-bar button {
-			color: black !important;
+			color: white !important;
 		  }
 
 		
 		footer {
-            background-color: #C0C0C0;
+            background-color: #FFCC00;
             color: black;
             padding: 10px;
             position: fixed;
@@ -98,11 +98,11 @@
 		</style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg" style="background-color: #C0C0C0;">
+<nav class="navbar navbar-expand-lg" style="background-color: #0033A0;">
   <div class="container-fluid">
     <div class="logo-container" style="margin-right: 40px;">
-        <img src="/SIPC/estaticos/img/paz_ciudadana.jpg" alt="Paz Ciudadana" width="120">
-		<a class="navbar-brand" href="admin_pc.php">Administrador</a>
+        <img src="/SIPC/estaticos/img/pdi.jpg" alt="Paz Ciudadana" width="120">
+		<a class="navbar-brand" href="admin_pdi.php">Administrador</a>
     </div>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -200,7 +200,7 @@
   <div class="container">
     <h2>Ingresar Nuevo Usuario</h2>
 	</br></br>
-    <form action="/SIPC/controladores/guardar_usuario_pc.php" method="POST" id="formNuevoUsuario">
+    <form action="/SIPC/controladores/guardar_usuario_pdi.php" method="POST" id="formNuevoUsuario">
   <div class="mb-3">
     <label for="nombre_completo" class="form-label">Nombre completo</label>
     <input type="text" class="form-control" id="nombre_completo" name="nombre_completo" required>

@@ -1,4 +1,4 @@
-<!-- PESTAÑA PDF REPORTE DE SENTENCIAS DE JEFE ZONA PAZ CIUDADANA -->
+<!-- PESTAÑA PDF REPORTE DE SENTENCIAS DE JEFE ZONA PDI -->
 <?php
 // Evitar que cualquier warning o notice interfiera con el PDF
 error_reporting(0);

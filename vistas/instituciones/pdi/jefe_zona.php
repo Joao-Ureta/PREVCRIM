@@ -1,25 +1,20 @@
+<!-- PESTAÑA JEFE ZONA PDI -->
+
 <?php
 session_start();
-if ($_SESSION['rol'] != 'Administrador') {
+if ($_SESSION['rol'] != 'JefeZona') {
     header("Location: login_pdi.php");
     exit;
 }
-include_once '../../../config/config.php';
-
-
-$sql = "SELECT id_delincuente, nombre_completo, rut, edad, genero, apodo, antecedentes, foto, nacionalidad, id_sector, estado_judicial FROM delincuente";
-$result = $conn->query($sql);
-
 ?>
+
 <html lang="es">
   <head>
     <meta charset="UTF-8">
     <meta name="description" content="Ejemplo de HRML5">
     <meta name="keywords" content="HTML5, CSS3, JavaScript">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/SIPC/estaticos/css/bootstrap.min.css">
-	
-<!-- Incluye los archivos de Bootstrap (si no lo has hecho aún) -->
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -28,12 +23,12 @@ $result = $conn->query($sql);
 
 
 
-    <title>Administrador PDIa</title>
+    <title>jefe de zona - Paz Ciudadana</title>
 	
-        <style>
+	       <style>
         body {
             font-family: Arial, sans-serif;
-            background:rgb(220, 220, 220);
+            background-color: #dcdcdc;
             color: white;
             text-align: center;
             margin-top: 0;
@@ -77,7 +72,7 @@ $result = $conn->query($sql);
         }
 
         .help-link a, .return-link a {
-            color: black;
+            color: white;
             text-decoration: none;
         }
 
@@ -157,7 +152,8 @@ $result = $conn->query($sql);
 		}
 		
 		.btn-solicitar:hover {
-			background-color: #FFD700;
+			background-color: #E6E6E6;
+            color: black;
 		  }
 
 		/* Adaptabilidad en pantallas más pequeñas */
@@ -180,8 +176,8 @@ $result = $conn->query($sql);
 		}
 
         footer {
-            background-color: #0033A0;
-            color: white;
+            background-color: #FFCC00;
+            color: black;
             padding: 10px;
             position: fixed;
             bottom: 0;
@@ -212,7 +208,7 @@ $result = $conn->query($sql);
 
 		/* Estilos para nav links y busqueda */
 		  .navbar {
-			background-color: #0033A0 !important;
+			background-color: #0033A0; !important;
 		  }
 
 		  .navbar a,
@@ -231,7 +227,6 @@ $result = $conn->query($sql);
 
 		  .dropdown-item:hover {
 			background-color: #FFCC00;
-            color: black !important;
 		  }
 
 		
@@ -332,6 +327,7 @@ $result = $conn->query($sql);
 
 .buscador button:hover {
     background-color: #E6E6E6;
+            color: black;
 }
 
 
@@ -346,8 +342,8 @@ $result = $conn->query($sql);
 }
 
 .botones a:hover {
-    background-color:  #E6E6E6;
-    color: black;
+    background-color: #E6E6E6;
+            color: black;
 }
 
 /* Estilos generales */
@@ -376,6 +372,7 @@ $result = $conn->query($sql);
 
 		  .boton:hover {
 			background-color: #E6E6E6;
+            color: black;
 		  }
 		  
 		  /* Boton de reporte general */
@@ -391,6 +388,7 @@ $result = $conn->query($sql);
 
 		  .boton-reporteGeneral:hover {
 			background-color: #E6E6E6;
+            color: black;
 		  }
 
 
@@ -402,7 +400,7 @@ $result = $conn->query($sql);
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7); /* Fondo oscuro */
+    background-color: #FFCC00; /* Fondo oscuro */
     z-index: 9999;
     overflow: auto; /* Para que si el contenido es largo, se pueda desplazar */
 }
@@ -444,7 +442,7 @@ $result = $conn->query($sql);
     font-family: 'Arial', sans-serif;
     font-size: 24px;
     margin-bottom: 15px;
-    background-color: #FFCC00; /* Fondo verde oscuro */
+    background-color: #FFCC00;/* Fondo  */
     padding: 10px; /* Espaciado alrededor del texto */
     border-radius: 5px; /* Bordes redondeados para el fondo */
 }
@@ -473,19 +471,19 @@ th, td {
 
 /* Contenedor de los títulos de la tabla */
 th {
-    background-color: #FFCC00; /* Verde oscuro */
-    color: #fff; /* Texto blanco */
+    background-color: #FFCC00; 
+    color: black; /* Texto blanco */
     font-size: 18px;
 }
 
 /* Estilo de las celdas de la tabla */
 td {
-    background-color: #FFCC00; /* Fondo verde claro */
+    background: #C0C0C0; 
     color: #333; /* Texto negro */
 }
 
 tr:hover {
-    background-color: #f1c40f; /* Amarillo cuando pasa el mouse */
+    background-color: #A9A9A9; 
 }
 
 /* Estilo del mapa */
@@ -498,13 +496,15 @@ tr:hover {
 }
 
 </style>
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg" style="background-color: #C0C0C0;">
+
+<nav class="navbar navbar-expand-lg" style="background-color: #0033A0;">
   <div class="container-fluid">
     <div class="logo-container" style="margin-right: 40px;">
-        <img src="/SIPC/estaticos/img/pdi.jpg" alt="Paz Ciudadana" width="120">
-		<a class="navbar-brand" href="admin_pc.php">Administrador</a>
+        <img src="/SIPC/estaticos/img/pdi.jpg" alt="PDI" width="120">
+		<a class="navbar-brand" href="jefe_zona.php">JEFE DE ZONA</a>
     </div>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -535,57 +535,6 @@ tr:hover {
 		  </ul>
 		</li>
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Delincuentes
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="form_ingresar_delincuente.php">Ingresar delincuente</a></li>
-            <li><a class="dropdown-item" href="ver_delincuentes.php">Ver delincuentes</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-		
-		<li class="nav-item dropdown">
-		  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-			Delitos
-		  </a>
-		  <ul class="dropdown-menu">
-			<li><a class="dropdown-item" href="form_registrar_delito.php">Registrar Delitos</a></li>
-			<li><a class="dropdown-item" href="ver_delitos.php">Listado de Delitos</a></li>
-		  </ul>
-		</li>
-		
-		<li class="nav-item dropdown">
-		  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-			Victimas
-		  </a>
-		  <ul class="dropdown-menu">
-			<li><a class="dropdown-item" href="form_registrar_victima.php">Registrar Victima</a></li>
-			<li><a class="dropdown-item" href="ver_victimas.php">Listado de Victimas</a></li>
-		  </ul>
-		</li>
-		
-		<li class="nav-item dropdown">
-		  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-			Controles
-		  </a>
-		  <ul class="dropdown-menu">
-			<li><a class="dropdown-item" href="form_registrar_control.php">Agregar Control</a></li>
-			<li><a class="dropdown-item" href="ver_controles.php">Historial de Controles</a></li>
-		  </ul>
-		</li>
-		
-		<li class="nav-item dropdown">
-		  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-			Sentencias
-		  </a>
-		  <ul class="dropdown-menu">
-			<li><a class="dropdown-item" href="form_registrar_sentencia.php">Ingresar Sentencias</a></li>
-			<li><a class="dropdown-item" href="ver_sentencia.php">Ver Sentencias</a></li>
-		  </ul>
-		</li>
 
       </ul>
       <div class="return-link">
@@ -600,7 +549,7 @@ tr:hover {
 </br></br>
     <!-- php de filtro por comuna -->
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/SIPC/config/config.php');
+include_once '../../../config/config.php';
 
 // Obtener todas las comunas para el dropdown
 $sql_comunas = "SELECT id_comuna, nombre_comuna FROM comuna";
@@ -724,7 +673,7 @@ if (isset($_GET['comuna']) && !empty($_GET['comuna'])) {
     </div>
 	</div>
 	
-<a href="admin_pc.php" class="boton">Actualizar</a>
+<a href="jefe_zona.php" class="boton">Actualizar</a>
 
 </div>
 
@@ -732,7 +681,7 @@ if (isset($_GET['comuna']) && !empty($_GET['comuna'])) {
     <div class="card-columns">
 	<!-- php de los filtros -->
     <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/SIPC/config/config.php');
+include_once '../../../config/config.php';
 
 // Inicializamos la variable de filtro
 $delitoFilter = '';
@@ -995,7 +944,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </br></br></br>
 
 <div>
-    <button class="boton-reporteGeneral" onclick="window.location.href='/SIPC/vistas/instituciones/carabineros/reporte_todos_delincuentes.php'">Generar reporte</button>
+    <button class="boton-reporteGeneral" onclick="window.location.href='/SIPC/vistas/instituciones/paz_ciudadana/reporte_todos_delincuentes.php'">Generar reporte</button>
 </div>
 
 <!-- boton de generar reporte general -->

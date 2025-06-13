@@ -1,37 +1,73 @@
-<!-- PESTAÑA INGRESAR USUARIO DE ADMIN PAZ CIUDADANA -->
+<?php
+session_start();
+include("../../../../config/config.php");
+
+$mensaje = "";
+$datosUsuario = null;
+
+$idInstitucionActual = $_SESSION['id_institucion']; // Asegúrate de que esté definido en la sesión
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST["rut_buscar"])) {
+        $rutBuscar = $_POST["rut_buscar"];
+
+        $sql = "SELECT u.rut, u.nombre_completo, u.correo, u.rol, i.nombre_institucion 
+                FROM usuario u
+                LEFT JOIN institucion i ON u.id_institucion = i.id_institucion
+                WHERE u.rut = '$rutBuscar' AND u.id_institucion = $idInstitucionActual";
+
+        $resultado = $conn->query($sql);
+
+        if ($resultado && $resultado->num_rows > 0) {
+            $datosUsuario = $resultado->fetch_assoc();
+        } else {
+            $mensaje = "No se encontró ningún usuario con ese RUT en tu institución.";
+        }
+    }
+
+    if (isset($_POST["rut_eliminar"])) {
+        $rutEliminar = $_POST["rut_eliminar"];
+
+        // Verificar que el usuario a eliminar pertenece a la misma institución
+        $sqlCheck = "SELECT * FROM usuario WHERE rut = '$rutEliminar' AND id_institucion = $idInstitucionActual";
+        $resultadoCheck = $conn->query($sqlCheck);
+
+        if ($resultadoCheck && $resultadoCheck->num_rows > 0) {
+            $sql = "DELETE FROM usuario WHERE rut = '$rutEliminar' AND id_institucion = $idInstitucionActual";
+            if ($conn->query($sql) === TRUE) {
+                $mensaje = "Usuario eliminado correctamente.";
+                $datosUsuario = null;
+            } else {
+                $mensaje = "Error al eliminar el usuario: " . $conn->error;
+            }
+        } else {
+            $mensaje = "El usuario no existe en tu institución o no tienes permiso para eliminarlo.";
+        }
+    }
+}
+?>
+
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Nuevo Usuario</title>
+  <title>Eliminar Usuario</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  
+    <style>
 
-  
-  <style>
-        body {
+		 body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(45deg, #BEBEBE, #D0D0D0, #E0E0E0);
-            color: black;
+            background-color: #dcdcdc;
+            color: white;
             text-align: center;
             margin-top: 0;
         } 
-		
-		.dropdown-menu {
-			background-color: #C0C0C0;
-		  }
-
-		  .dropdown-item:hover {
-			background-color: #A9A9A9;
-		  }
-		
-		/* Estilos para el formulario */
-		.container {
-			display: flex;
+        .container {
+            display: flex;
 			flex-direction: column; /* Asegura que los elementos dentro estén en columna */
 			justify-content: center;
 			align-items: center;
@@ -39,43 +75,57 @@
 			width: 80%;
 			max-width: 800px;
 			padding: 80px;
-			background-color: #C0C0C0;
+			background-color: #0033A0;
 			border-radius: 10px;
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.90); /* Efecto de sombra con relieve */
 			margin: 50px auto; /* Centra horizontalmente y añade margen superior/inferior */
-			
-		}
+        }
 		
-		label.form-label {
-    font-weight: bold;
-    color: black;
-    text-align: left;
-    display: block;
-  }
-
-  small.form-text {
-    color: black !important;
-  }
-
-  .btn-success {
-    background-color: #808080;
-    color: white;
-    font-weight: bold;
-    border: none;
-    display: block;
-    margin: 0 auto;
-    padding: 10px 20px;
-  }
-
-  .btn-success:hover {
-    background-color: #D3D3D3;
-    color: white;
-  }
-
-  input.form-control {
-    border-radius: 6px;
-  }
+		  input.form-control {
+            border-radius: 6px;
+        }
 	
+		
+		.dropdown-menu {
+			background-color: #0033A0;
+		  }
+
+		  .dropdown-item:hover {
+			background-color: #FFCC00;
+		  }
+		
+        label, p {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .btn-buscar {
+            background-color: #808080;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #D3D3D3;
+        }
+		
+		.btn-eliminar {
+            background-color: #FF0000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn-eliminar:hover {
+            background-color: #00FF7F;
+        }
+		
 		.navbar a,
 		  .navbar .nav-link,
 		  .navbar .navbar-brand,
@@ -83,26 +133,26 @@
 		  .navbar .dropdown-item,
 		  .return-link a,
 		  .search-bar button {
-			color: black !important;
+			color: white !important;
 		  }
-
 		
-		footer {
-            background-color: #C0C0C0;
-            color: black;
+				footer {
+            background-color: #0033A0;
+            color: white;
             padding: 10px;
             position: fixed;
             bottom: 0;
             width: 100%;
         }
-		</style>
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg" style="background-color: #C0C0C0;">
+
+<nav class="navbar navbar-expand-lg" style="background-color: #0033A0;">
   <div class="container-fluid">
     <div class="logo-container" style="margin-right: 40px;">
-        <img src="/SIPC/estaticos/img/paz_ciudadana.jpg" alt="Paz Ciudadana" width="120">
-		<a class="navbar-brand" href="admin_pc.php">Administrador</a>
+        <img src="/SIPC/estaticos/img/pdi.jpg" alt="Paz Ciudadana" width="120">
+		<a class="navbar-brand" href="admin_pdi.php">Administrador</a>
     </div>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -197,94 +247,33 @@
 </nav>
 </br></br>
 
-  <div class="container">
-    <h2>Ingresar Nuevo Usuario</h2>
-	</br></br>
-    <form action="/SIPC/controladores/guardar_usuario_pc.php" method="POST" id="formNuevoUsuario">
-  <div class="mb-3">
-    <label for="nombre_completo" class="form-label">Nombre completo</label>
-    <input type="text" class="form-control" id="nombre_completo" name="nombre_completo" required>
-  </div>
+<div class="container">
+    <h2>Eliminar Usuario</h2>
 
-  <div class="mb-3">
-    <label for="rut" class="form-label">RUT</label>
-    <input type="text" class="form-control" id="rut" name="rut" required>
-    <small class="form-text text-muted">Ejemplo: 12345678-9 (sin puntos)</small>
-  </div>
+    <!-- Formulario de búsqueda -->
+    <form method="POST">
+        <label for="rut_buscar">Ingrese RUT del usuario:</label>
+        <input type="text" id="rut_buscar" name="rut_buscar" required>
+        <button type="submit">Buscar</button>
+    </form>
 
-  <div class="mb-3">
-    <label for="correo" class="form-label">Correo</label>
-    <input type="email" class="form-control" id="correo" name="correo" required>
-  </div>
+    <?php if (!empty($mensaje)): ?>
+        <p><strong><?php echo $mensaje; ?></strong></p>
+    <?php endif; ?>
 
-  <div class="mb-3">
-    <label for="contrasena" class="form-label">Contraseña:</label>
-    <input type="password" class="form-control" id="contrasena" name="contrasena" required>
-    <small class="form-text text-muted">
-      La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una letra minúscula, un número y un carácter especial.
-    </small>
-  </div>
+    <?php if ($datosUsuario): ?>
+        <!-- Mostrar los datos del usuario encontrado -->
+        <form method="POST">
+            <p>RUT: <?php echo $datosUsuario['rut']; ?></p>
+            <p>Nombre: <?php echo $datosUsuario['nombre_completo']; ?></p>
+            <p>Correo: <?php echo $datosUsuario['correo']; ?></p>
+            <p>Rol: <?php echo $datosUsuario['rol']; ?></p>
+            <p>Institución: <?php echo $datosUsuario['nombre_institucion']; ?></p>
 
-  <div class="mb-3">
-  <label for="rol" class="form-label">Rol</label>
-  <select class="form-select" id="rol" name="rol" required>
-    <option value="">Seleccione un rol</option>
-    <option value="JefeZona">Jefe de Zona</option>
-    <option value="Operador">Operador</option>
-  </select>
-</div>
-
-      </br></br>
-
-  <button type="submit" class="btn btn-success">Registrar usuario</button>
-</form>
-  </div>
-
-<!-- Funcion de validacion de rut Modulo 11 -->
-  <script>
-  // Validar RUT con Módulo 11
-  function validarRUT(rut) {
-    rut = rut.replace(/\./g, "").replace("-", "");
-    let cuerpo = rut.slice(0, -1);
-    let dv = rut.slice(-1).toUpperCase();
-
-    let suma = 0;
-    let multiplo = 2;
-
-    for (let i = cuerpo.length - 1; i >= 0; i--) {
-      suma += parseInt(cuerpo.charAt(i)) * multiplo;
-      multiplo = multiplo < 7 ? multiplo + 1 : 2;
-    }
-
-    let dvEsperado = 11 - (suma % 11);
-    dvEsperado = dvEsperado === 11 ? "0" : dvEsperado === 10 ? "K" : dvEsperado.toString();
-
-    return dv === dvEsperado;
-  }
-
-  document.getElementById("formNuevoUsuario").addEventListener("submit", function(e) {
-    const rut = document.getElementById("rut").value;
-    const clave = document.getElementById("contrasena").value;
-
-    if (!validarRUT(rut)) {
-      e.preventDefault();
-      Swal.fire("Error", "El RUT ingresado no es válido.", "error");
-      return;
-    }
-
-    const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    if (!regexPassword.test(clave)) {
-      e.preventDefault();
-      Swal.fire("Error", "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.", "error");
-    }
-  });
-</script>
-
-</br></br></br>
-
-<footer>
-    &copy; 2025 Sistema Integrado de Prevención de Crímenes (SIPC) - Todos los derechos reservados.
-</footer>
-
+            <!-- Campo oculto para saber qué usuario eliminar -->
+            <input type="hidden" name="rut_eliminar" value="<?php echo $datosUsuario['rut']; ?>">
+            <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este usuario?')">Eliminar Usuario</button>
+        </form>
+    <?php endif; ?>
 </body>
 </html>
