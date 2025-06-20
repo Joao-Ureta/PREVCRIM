@@ -37,27 +37,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmtBitacora->bind_param("is", $id_usuario, $actividad);
                 $stmtBitacora->execute();
 
-                // Verificar si la institución es "Paz ciudadana"
-                $institucion_paz_ciudadana = 3; // Asegúrate de que este ID corresponde a "Paz ciudadana"
+                // Verificar si la institución es "Paz Ciudadana"
+$institucion_pazCiudadana = 3; // Asegúrate de que este ID corresponde a "Paz Ciudadana"
 
-                switch ($_SESSION['rol']) {
-                    case 'Administrador':
-                        if ($_SESSION['id_institucion'] == $institucion_paz_ciudadana) {
-                            header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/admin/admin_pc.php');
-                            exit();
-                        } else {
-                            $error = "❌ No tienes permiso para acceder a esta sección.";
-                        }
-                        break;
-                    case 'JefeZona':
-                        header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/jefe_zona.php');
-                        exit();
-                    case 'Operador':
-                        header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/operador/operador.php');
-                        exit();
-                    default:
-                        $error = "⚠️ Rol no válido.";
-                }
+switch ($_SESSION['rol']) {
+    case 'Administrador':
+        if ($_SESSION['id_institucion'] == $institucion_pazCiudadana) {
+            header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/admin/admin_pc.php');
+            exit();
+        } else {
+            $error = "❌ No tienes permiso para acceder a esta sección.";
+        }
+        break;
+
+    case 'JefeZona':
+        if ($_SESSION['id_institucion'] == $institucion_pazCiudadana) {
+            header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/jefe_zona.php');
+            exit();
+        } else {
+            $error = "❌ No tienes permiso para acceder a esta sección.";
+        }
+        break;
+
+    case 'Operador':
+        if ($_SESSION['id_institucion'] == $institucion_pazCiudadana) {
+            header('Location: http://localhost/SIPC/vistas/instituciones/paz_ciudadana/operador/operador.php');
+            exit();
+        } else {
+            $error = "❌ No tienes permiso para acceder a esta sección.";
+        }
+        break;
+
+    default:
+        $error = "⚠️ Rol no válido.";
+}
+
             } else {
                 $error = "❌ Contraseña incorrecta.";
             }

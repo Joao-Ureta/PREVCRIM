@@ -38,26 +38,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmtBitacora->execute();
 
                 // Verificar si la institución es "PDI"
-                $institucion_pdi = 5; // Asegúrate de que este ID corresponde a "PDI"
+$institucion_pdi = 5; // Asegúrate de que este ID corresponde a "PDI"
 
-                switch ($_SESSION['rol']) {
-                    case 'Administrador':
-                        if ($_SESSION['id_institucion'] == $institucion_pdi) {
-                            header('Location: http://localhost/SIPC/vistas/instituciones/pdi/admin/admin_pdi.php');
-                            exit();
-                        } else {
-                            $error = "❌ No tienes permiso para acceder a esta sección.";
-                        }
-                        break;
-                    case 'JefeZona':
-                        header('Location: http://localhost/SIPC/vistas/instituciones/pdi/jefe_zona.php');
-                        exit();
-                    case 'Operador':
-                        header('Location: http://localhost/SIPC/vistas/instituciones/pdi/operador/operador.php');
-                        exit();
-                    default:
-                        $error = "⚠️ Rol no válido.";
-                }
+switch ($_SESSION['rol']) {
+    case 'Administrador':
+        if ($_SESSION['id_institucion'] == $institucion_pdi) {
+            header('Location: http://localhost/SIPC/vistas/instituciones/pdi/admin/admin_pdi.php');
+            exit();
+        } else {
+            $error = "❌ No tienes permiso para acceder a esta sección.";
+        }
+        break;
+
+    case 'JefeZona':
+        if ($_SESSION['id_institucion'] == $institucion_pdi) {
+            header('Location: http://localhost/SIPC/vistas/instituciones/pdi/jefe_zona.php');
+            exit();
+        } else {
+            $error = "❌ No tienes permiso para acceder a esta sección.";
+        }
+        break;
+
+    case 'Operador':
+        if ($_SESSION['id_institucion'] == $institucion_pdi) {
+            header('Location: http://localhost/SIPC/vistas/instituciones/pdi/operador/operador.php');
+            exit();
+        } else {
+            $error = "❌ No tienes permiso para acceder a esta sección.";
+        }
+        break;
+
+    default:
+        $error = "⚠️ Rol no válido.";
+}
+
             } else {
                 $error = "❌ Contraseña incorrecta.";
             }

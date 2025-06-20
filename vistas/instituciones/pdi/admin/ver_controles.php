@@ -129,7 +129,7 @@ body {
             <li><a class="dropdown-item" href="ingresar_usuario.php">Ingresar nuevo usuario</a></li>
             <li><a class="dropdown-item" href="eliminar_usuario.php">Eliminar usuario</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="lista_usuarios.php">Listado de usuarios</a></li>
           </ul>
         </li>
 		

@@ -100,9 +100,11 @@ $zonas_pintadas = [
         }
 
         .help-link, .return-link {
-            text-align: left;
+            text-align: right;
             margin-top: 10px;
+            margin-right: -900px;
         }
+        
 
 		.card-columns {
 			display: grid;
@@ -213,8 +215,7 @@ tr:hover {
             <li><a class="dropdown-item" href="ingresar_usuario.php">Ingresar nuevo usuario</a></li>
             <li><a class="dropdown-item" href="eliminar_usuario.php">Eliminar usuario</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
+            <li><a class="dropdown-item" href="lista_usuarios.php">Listado de usuarios</a></li>
         </li>
 		
 		<li class="nav-item dropdown">

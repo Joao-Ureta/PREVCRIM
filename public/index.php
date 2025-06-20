@@ -161,9 +161,6 @@
 				<a href="login_pdi.php?institucion=pdi">
                     <img src="/SIPC/estaticos/img/pdi.jpg" alt="PDI">
                 </a>
-                <a href="login.php?institucion=seguridados10">
-                    <img src="/SIPC/estaticos/img/seguridad_os10.png" alt="Seguridad OS10">
-                </a>
             </div>
         </div>
     </div>
