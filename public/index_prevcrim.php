@@ -126,7 +126,7 @@
                 <a href="index.php">
                     <img src="/SIPC/estaticos/img/logo_funcionario.png" alt="Funcionario">
                 </a>
-                <a href="#">
+                <a href="index_visitante.php">
                     <img src="/SIPC/estaticos/img/logo_visitante.png" alt="Visitante">
                 </a>
             </div>

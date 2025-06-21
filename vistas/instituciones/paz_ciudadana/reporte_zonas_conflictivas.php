@@ -53,7 +53,7 @@ $zonas_pintadas = [
 
     <style>
 	
-	        body {
+	    body{
             font-family: Arial, sans-serif;
             background: #D0D0D0;
             color: black;

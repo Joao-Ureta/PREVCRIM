@@ -52,7 +52,7 @@ $zonas_pintadas = [
 
     <style>
 	
-	        body {
+	    body{
             font-family: Arial, sans-serif;
             background-color: #2E8B57;
             color: white;
@@ -100,11 +100,9 @@ $zonas_pintadas = [
         }
 
         .help-link, .return-link {
-            text-align: right;
+            text-align: left;
             margin-top: 10px;
-            margin-right: -900px;
         }
-        
 
 		.card-columns {
 			display: grid;
@@ -194,6 +192,14 @@ tr:hover {
 			background-color: #00FF7F;
 		  }
 
+          footer {
+            background-color: #0b6623;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -216,6 +222,7 @@ tr:hover {
             <li><a class="dropdown-item" href="eliminar_usuario.php">Eliminar usuario</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="lista_usuarios.php">Listado de usuarios</a></li>
+          </ul>
         </li>
 		
 		<li class="nav-item dropdown">
